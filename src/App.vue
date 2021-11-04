@@ -2,16 +2,17 @@
   <div id="app">
     <div class="jumbotron">
       <div class="container">
-        <h1>Descentralized Application Demo</h1>
+        <h1>faApps Frontend Demo</h1>
         <p>This is a simple vueJs demo running one descentralized node.</p>
-
-        <a
-          @click="download"
-          class="btn btn-primary btn-lg"
-          href="#"
-          role="button"
-          >To be Node</a
-        >
+        <p>
+          To be a node, get
+          <a
+            target="_blank"
+            href="https://github.com/fdapps-tools/backend#setup"
+            >project repository</a
+          >
+          and run project with setup NETWORK_NODE_URL={{ link }}
+        </p>
       </div>
     </div>
 
@@ -40,40 +41,17 @@ export default {
   name: "App",
   data() {
     return {
-      link: "",
+      link: location.href,
       nodes: [],
     };
   },
 
   async beforeMount() {
-    const { url } = await this.getTunnelInfo();
-    this.link = url;
-
     const nodes = await this.getNodeList();
     this.nodes = nodes;
   },
 
   methods: {
-    download() {
-      window.location.href = `/download`;
-    },
-
-    getTunnelInfo() {
-      return new Promise((resolve, reject) => {
-        fetch(`/stats`)
-          .then((response) => {
-            if (response.status === 200) {
-              resolve(response.json());
-            } else {
-              reject(response);
-            }
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
-    },
-
     getNodeList() {
       return new Promise((resolve, reject) => {
         fetch(`${this.link}/nodes`)
@@ -94,5 +72,4 @@ export default {
 </script>
 
 <style>
-
 </style>
